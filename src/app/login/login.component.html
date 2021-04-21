@@ -1,0 +1,14 @@
+<div>
+  <form>
+    <div>
+      <label>User:</label>
+      <input name="username" #username>
+    </div>
+
+    <div>
+      <label>Password:</label>
+      <input type="password" name="password" #password>
+    </div>
+    <a (click)="login(username.value, password.value)">Submit</a>
+  </form>
+</div>
