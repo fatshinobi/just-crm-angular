@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators'
+import * as Redux from 'redux';
 
 import { Customer } from './models/customer';
+import { AppStore } from './app.store';
+import { AppState } from './app.reducer';
+import * as CustomerActions from './customers/customer.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +22,19 @@ export class CustomerService {
   };
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    @Inject(AppStore) private store: Redux.Store<AppState>
   ) { }
 
-  getCustomers(): Observable<Customer[]> {
+  getCustomers() {
+    this.getCustomersFromAPI().subscribe(
+        response => { 
+          this.store.dispatch(CustomerActions.loadItems(response)) 
+        }
+      )
+  }
+
+  getCustomersFromAPI(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customersUrl)
       .pipe(
         tap(_ => console.log('fetched customers')),
