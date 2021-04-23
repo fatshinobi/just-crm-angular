@@ -2,6 +2,8 @@
   <a href (click)="logOut()">Log Out</a>
 </div>
 
+<app-customer-edit></app-customer-edit>
+
 <ul class="customers">
   <li *ngFor="let customer of customers">
     <span class="badge">{{customer.id}}</span> - {{customer.name}}

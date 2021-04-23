@@ -1,0 +1,9 @@
+<div>
+  <label>Customer Name:
+    <input #customerName />
+  </label>
+  <button (click)="save(customerName.value); customerName.value=''">
+    Add
+  </button>
+</div>
+

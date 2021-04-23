@@ -21,6 +21,13 @@ export const CustomersReducer = function(state: CustomersState = initialState, a
       };
     }
 
+    case CustomerActions.ADD_ITEM: {
+      const customer: Customer = (<CustomerActions.AddItemAction>action).customer;
+      return {
+        customers: [...state.customers, customer]
+      };
+    }
+
     default:
       return state;
   }

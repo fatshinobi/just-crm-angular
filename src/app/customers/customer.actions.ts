@@ -11,3 +11,14 @@ export const loadItems: ActionCreator<LoadItemsAction> =
     type: LOAD_ITEMS,
     customers: customers
   });
+
+export const ADD_ITEM = '[Item] Add new item';
+export interface AddItemAction extends Action {
+  customer: Customer;
+}
+
+export const addItem: ActionCreator<AddItemAction> =
+  (customer) => ({
+    type: ADD_ITEM,
+    customer: customer
+  });

@@ -42,6 +42,23 @@ export class CustomerService {
       );
   }
 
+  addNew(customer: Customer) {
+    this.addNewToApi(customer).subscribe(
+      response => { 
+         console.log('add customer');
+         console.log(response);
+         this.store.dispatch(CustomerActions.addItem(response))
+      }
+    )
+  }
+
+  addNewToApi(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(this.customersUrl, customer, this.httpOptions).pipe(
+      tap((newCustomer: Customer) => console.log(`added customer w/ id=${newCustomer.id}`)),
+      catchError(this.handleError<Customer>('addNew'))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
