@@ -1,9 +1,12 @@
 <div>
-  <label>Customer Name:
-    <input #customerName />
-  </label>
-  <button (click)="save(customerName.value); customerName.value=''">
-    Add
-  </button>
+  <form #customerForm="ngForm">
+    <label>Customer Name:
+      <input id="name" name="name" [(ngModel)]="customer.name" #name="ngModel" />
+    </label>
+
+    <button (click)="save(customerForm)">
+      Add
+    </button>
+  </form>
 </div>
 

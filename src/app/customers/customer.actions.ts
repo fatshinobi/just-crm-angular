@@ -22,3 +22,25 @@ export const addItem: ActionCreator<AddItemAction> =
     type: ADD_ITEM,
     customer: customer
   });
+
+export const REFRESH_ITEM = '[Customer] Refresh item';
+export interface RefreshItemAction extends Action {
+  customer: Customer;
+}
+
+export const refreshItem: ActionCreator<RefreshItemAction> =
+  (customer) => ({
+    type: REFRESH_ITEM,
+    customer: customer
+  });
+
+export const DELETE_ITEM = '[Customer] Delete item';
+export interface DeleteItemAction extends Action {
+  customer: Customer;
+}
+
+export const deleteItem: ActionCreator<DeleteItemAction> =
+  (customer) => ({
+    type: DELETE_ITEM,
+    customer: customer
+  });

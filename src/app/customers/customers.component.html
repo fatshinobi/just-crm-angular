@@ -2,10 +2,18 @@
   <a href (click)="logOut()">Log Out</a>
 </div>
 
-<app-customer-edit></app-customer-edit>
+<a routerLink="/customer_form/">
+  Add New
+</a>
 
 <ul class="customers">
   <li *ngFor="let customer of customers">
-    <span class="badge">{{customer.id}}</span> - {{customer.name}}
+    <span class="badge">{{customer.id}}</span> - {{customer.name}} 
+    <a routerLink="/customer_form/{{customer.id}}">
+      Edit
+    </a>
+    <button (click)="deleteItem(customer)">
+      Delete
+    </button>
   </li>
 </ul>

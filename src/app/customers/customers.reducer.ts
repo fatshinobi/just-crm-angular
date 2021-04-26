@@ -28,6 +28,38 @@ export const CustomersReducer = function(state: CustomersState = initialState, a
       };
     }
 
+    case CustomerActions.REFRESH_ITEM: {
+      const customer: Customer = (<CustomerActions.RefreshItemAction>action).customer;
+      const newCustomers: Customer[] = state.customers.map( 
+          cust => {
+            if (cust.id === customer.id) {
+              return customer;
+            } else {
+              return cust;
+            }
+          }
+        );
+
+      return {
+        customers: newCustomers
+      };
+    }
+
+    case CustomerActions.DELETE_ITEM: {
+      const customer: Customer = (<CustomerActions.RefreshItemAction>action).customer;
+      const newCustomers: Customer[] = []
+      state.customers.forEach(
+        cust => {
+          if (cust.id !== customer.id) {
+            newCustomers.push(cust);
+          }
+        }
+      );
+      return {
+        customers: newCustomers
+      };
+    }
+    
     default:
       return state;
   }

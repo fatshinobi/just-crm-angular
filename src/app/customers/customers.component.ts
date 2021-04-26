@@ -46,6 +46,10 @@ export class CustomersComponent implements OnInit {
     this.customers = getAllCustomers(state);
   }
 
+  deleteItem(customer: Customer) {
+    this.customerService.deleteCustomer(customer);
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

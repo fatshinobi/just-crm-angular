@@ -42,6 +42,14 @@ export class CustomerService {
       );
   }
 
+  getCustomerFromAPI(id: string): Observable<Customer> {
+    return this.http.get<Customer>(`${this.customersUrl}/${id}`)
+      .pipe(
+        tap(_ => console.log(`fetched customer ${id}`)),
+        catchError(this.handleError<Customer>('getCustomer', {id: '', name: ''}))
+      );
+  }
+
   addNew(customer: Customer) {
     this.addNewToApi(customer).subscribe(
       response => { 
@@ -56,6 +64,40 @@ export class CustomerService {
     return this.http.post<Customer>(this.customersUrl, customer, this.httpOptions).pipe(
       tap((newCustomer: Customer) => console.log(`added customer w/ id=${newCustomer.id}`)),
       catchError(this.handleError<Customer>('addNew'))
+    );
+  }
+
+  updateCustomer(customer: Customer) {
+    this.updateCustomerToApi(customer).subscribe(
+      response => {
+        console.log('update customer');
+        console.log(response);
+        this.store.dispatch(CustomerActions.refreshItem(response))
+      }
+    )
+  }
+
+  updateCustomerToApi(customer: Customer): Observable<Customer> {
+    return this.http.patch<Customer>(`${this.customersUrl}/${customer.id}`, customer, this.httpOptions).pipe(
+      tap((newCustomer: Customer) => console.log(`updated customer w/ id=${newCustomer.id}`)),
+      catchError(this.handleError<Customer>('updateCustomer'))
+    );
+  }
+
+  deleteCustomer(customer: Customer) {
+    this.deleteCustomerToApi(customer).subscribe(
+      response => {
+        console.log('update customer');
+        console.log(response);
+        this.store.dispatch(CustomerActions.deleteItem(customer))
+      }
+    )
+  }
+
+  deleteCustomerToApi(customer: Customer): Observable<Customer> {
+    return this.http.delete<Customer>(`${this.customersUrl}/${customer.id}`, this.httpOptions).pipe(
+      tap((delCustomer: Customer) => console.log(`deleted customer w/ id=${delCustomer.id}`)),
+      catchError(this.handleError<Customer>('deleteCustomer'))
     );
   }
 
