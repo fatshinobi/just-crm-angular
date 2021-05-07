@@ -4,6 +4,14 @@
       <input id="name" name="name" [(ngModel)]="customer.name" #name="ngModel" />
     </label>
 
+    <label>User:
+      <select>
+        <option *ngFor="let user of this.users" [value]="user.id">
+          {{user.name}}
+        </option>
+      </select>
+    </label>
+
     <button (click)="save(customerForm)">
       Add
     </button>
