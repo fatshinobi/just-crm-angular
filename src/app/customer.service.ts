@@ -28,7 +28,7 @@ export class CustomerService {
 
   getCustomers() {
     this.getCustomersFromAPI().subscribe(
-        response => { 
+        response => {
           this.store.dispatch(CustomerActions.loadItems(response)) 
         }
       )
@@ -46,7 +46,7 @@ export class CustomerService {
     return this.http.get<Customer>(`${this.customersUrl}/${id}`)
       .pipe(
         tap(_ => console.log(`fetched customer ${id}`)),
-        catchError(this.handleError<Customer>('getCustomer', {id: '', name: ''}))
+        catchError(this.handleError<Customer>('getCustomer', {id: '', name: '' , web: '', phone: '', about: '', user_id: ''}))
       );
   }
 

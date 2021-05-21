@@ -1,18 +1,32 @@
 <div>
-  <form #customerForm="ngForm">
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
     <label>Customer Name:
-      <input id="name" name="name" [(ngModel)]="customer.name" #name="ngModel" />
+      <input type="text" formControlName="name" />
     </label>
 
     <label>User:
-      <select>
-        <option *ngFor="let user of this.users" [value]="user.id">
+      <select formControlName="user_id">
+        <option *ngFor="let user of this.users" 
+          [value]="user.id"
+          [attr.selected]="user.id === customer.user_id ? true : null">
           {{user.name}}
         </option>
       </select>
     </label>
 
-    <button (click)="save(customerForm)">
+    <label>About:
+      <input type="text" formControlName="about" />
+    </label>
+
+    <label>Phone:
+      <input type="text" formControlName="phone" />
+    </label>
+
+    <label>Web:
+      <input type="text" formControlName="web" />
+    </label>
+
+    <button type="submit" [disabled]="!customerForm.valid">
       Add
     </button>
   </form>

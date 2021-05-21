@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as Redux from 'redux';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 import { Customer } from '../models/customer';
 import { CustomerService } from '../customer.service';
@@ -20,14 +21,23 @@ import { AppState, getAllUsers } from '../app.reducer';
 export class CustomerEditComponent implements OnInit {
   //@Input() customer: Customer;
   customer_id: string;
-  customer: Customer;
+  customer: Customer = {} as Customer;
   users: User[];
+
+  customerForm = new FormGroup({
+    name: new FormControl(''),
+    about: new FormControl(''),
+    phone: new FormControl(''),
+    web: new FormControl(''),
+    user_id: new FormControl('')
+  });
 
   constructor(
       private customerService: CustomerService, 
       private userService: UserService, 
       private route: ActivatedRoute, 
       private location: Location,
+      private formBuilder: FormBuilder,
       @Inject(AppStore) private store: Redux.Store<AppState>
     ) { }
 
@@ -40,11 +50,22 @@ export class CustomerEditComponent implements OnInit {
       this.customerService.getCustomerFromAPI(this.customer_id).subscribe(
         response => {
           this.customer = response;
+          this.initCustomerForm(this.customer);
       })
     } else {
-      this.customer = {id: '', name: ''}
+      this.customer = {id: '', name: '', about: '', phone: '', web: '', user_id: ''} as Customer;
     }
 
+  }
+
+  initCustomerForm(customer: Customer) {
+    this.customerForm = new FormGroup({
+      name: new FormControl(customer.name),
+      about: new FormControl(customer.about),
+      phone: new FormControl(customer.phone),
+      web: new FormControl(customer.web),
+      user_id: new FormControl(customer.user_id)
+    });
   }
 
   updateState() {
@@ -52,17 +73,24 @@ export class CustomerEditComponent implements OnInit {
     this.users = getAllUsers(state);
   }
 
-  save(customer) {
-    //name = name.trim();
-    //if (!name) { return; }
-
+  onSubmit() {
     if (this.customer_id) {
       this.customerService.updateCustomer({
         id: this.customer_id,
-        name: this.customer.name
+        name: this.customerForm.value.name,
+        about: this.customerForm.value.name,
+        phone: this.customerForm.value.phone,
+        web: this.customerForm.value.web,
+        user_id: this.customerForm.value.user_id
       });
     } else {
-      this.customerService.addNew({name: this.customer.name} as Customer);
+      this.customerService.addNew({
+        name: this.customerForm.value.name,
+        about: this.customerForm.value.name,
+        phone: this.customerForm.value.phone,
+        web: this.customerForm.value.web,
+        user_id: this.customerForm.value.user_id
+      } as Customer);
     }
     this.location.back();
   }
