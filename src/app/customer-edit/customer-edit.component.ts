@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as Redux from 'redux';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { Customer } from '../models/customer';
 import { CustomerService } from '../customer.service';
@@ -24,13 +24,9 @@ export class CustomerEditComponent implements OnInit {
   customer: Customer = {} as Customer;
   users: User[];
 
-  customerForm = new FormGroup({
-    name: new FormControl(''),
-    about: new FormControl(''),
-    phone: new FormControl(''),
-    web: new FormControl(''),
-    user_id: new FormControl('')
-  });
+  emptyCustomer = {id: '', name: '', about: '', phone: '', web: '', user_id: ''} as Customer;
+
+  customerForm: FormGroup;
 
   constructor(
       private customerService: CustomerService, 
@@ -39,7 +35,9 @@ export class CustomerEditComponent implements OnInit {
       private location: Location,
       private formBuilder: FormBuilder,
       @Inject(AppStore) private store: Redux.Store<AppState>
-    ) { }
+    ) { 
+      this.initCustomerForm(this.emptyCustomer);
+    }
 
   ngOnInit(): void {
     this.store.subscribe( () => this.updateState() );
@@ -53,14 +51,14 @@ export class CustomerEditComponent implements OnInit {
           this.initCustomerForm(this.customer);
       })
     } else {
-      this.customer = {id: '', name: '', about: '', phone: '', web: '', user_id: ''} as Customer;
+      this.customer = this.emptyCustomer;
     }
 
   }
 
   initCustomerForm(customer: Customer) {
     this.customerForm = new FormGroup({
-      name: new FormControl(customer.name),
+      name: new FormControl(customer.name, [Validators.required, Validators.minLength(3)]),
       about: new FormControl(customer.about),
       phone: new FormControl(customer.phone),
       web: new FormControl(customer.web),

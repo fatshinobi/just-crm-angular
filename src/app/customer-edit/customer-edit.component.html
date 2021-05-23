@@ -1,10 +1,22 @@
 <div>
   <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
-    <label>Customer Name:
+    <div>
+      <label>Customer Name:</label>
       <input type="text" formControlName="name" />
-    </label>
+    </div>
 
-    <label>User:
+    <div *ngIf="customerForm.controls['name'].invalid && (customerForm.controls['name'].dirty || customerForm.controls['name'].touched)" class="alert">
+      <div *ngIf="customerForm.controls['name'].errors?.required">
+        Name is required.
+      </div>
+
+      <div *ngIf="customerForm.controls['name'].errors?.minlength">
+        Name must be at least 3 characters long.
+      </div>
+    </div>
+
+    <div>
+      <label>User:</label>
       <select formControlName="user_id">
         <option *ngFor="let user of this.users" 
           [value]="user.id"
@@ -12,19 +24,22 @@
           {{user.name}}
         </option>
       </select>
-    </label>
+    </div>
 
-    <label>About:
+    <div>
+      <label>About:</label>
       <input type="text" formControlName="about" />
-    </label>
+    </div>
 
-    <label>Phone:
+    <div>
+      <label>Phone:</label>
       <input type="text" formControlName="phone" />
-    </label>
-
-    <label>Web:
+    </div>
+    
+    <div>    
+      <label>Web:</label>
       <input type="text" formControlName="web" />
-    </label>
+    </div>
 
     <button type="submit" [disabled]="!customerForm.valid">
       Add
