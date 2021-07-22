@@ -4,10 +4,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators'
 import * as Redux from 'redux';
 
-import { User } from './models/user';
-import { AppStore } from './app.store';
-import { AppState } from './app.reducer';
-import * as UserActions from './users/user.actions';
+import { User } from '../models/user';
+import { AppStore } from '../app.store';
+import { AppState } from '../app.reducer';
+import * as UserActions from '../users/user.actions';
 
 @Injectable({
   providedIn: 'root'

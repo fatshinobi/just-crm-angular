@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomersComponent } from './customers/customers.component';
 import { LoginComponent } from './login/login.component';
-import { AUTH_PROVIDERS } from './auth.service';
+import { AUTH_PROVIDERS } from './services/auth.service';
 import { LoggedInGuard } from './logged-in.guard';
 
 import { AppState, default as reducer } from './app.reducer';

@@ -5,8 +5,8 @@ import * as Redux from 'redux';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { Customer } from '../models/customer';
-import { CustomerService } from '../customer.service';
-import { UserService } from '../user.service';
+import { CustomerService } from '../services/customer.service';
+import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 
 import { AppStore } from '../app.store';

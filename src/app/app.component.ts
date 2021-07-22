@@ -3,8 +3,8 @@ import * as Redux from 'redux';
 
 import { AppStore } from './app.store';
 import { AppState } from './app.reducer';
-import { CustomerService } from './customer.service'
-import { UserService } from './user.service';
+import { CustomerService } from './services/customer.service'
+import { UserService } from './services/user.service';
 import { User } from './models/user';
 
 @Component({

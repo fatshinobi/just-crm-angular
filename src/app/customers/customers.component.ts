@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators'
@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 import * as Redux from 'redux';
 
 import { Customer } from '../models/customer';
-import { CustomerService } from '../customer.service'
+import { CustomerService } from '../services/customer.service'
 import { AppStore } from '../app.store';
 import { AppState, getAllCustomers } from '../app.reducer';
 
